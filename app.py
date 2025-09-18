@@ -226,3 +226,31 @@ with tab3:
         )
         fig2 = style_fig(fig2)
         st.plotly_chart(fig2, use_container_width=True)
+    
+    with col4:
+        #Q3/ What is the average monthly income by job role?
+        avg_income_byJob_sql = pd.read_sql_query("""SELECT JobRole , AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                            FROM employees 
+                            GROUP BY JobRole;""",conn)
+        #pie chart
+        fig3 = px.pie(avg_income_byJob_sql,
+                    values="AVG_MonthlyIncome",
+                    names="JobRole",
+                    title="average monthly income by job role")
+        fig3 = style_fig(fig3)
+        st.plotly_chart(fig3, use_container_width=True)
+
+        #Q12/ Avarage Performance rating by years at company (loyalty vs performance) ?
+        per_byYear_sql = pd.read_sql_query("""SELECT YearsAtCompany, AVG(PerformanceRating) AS AVG_PerformanceRating 
+                                FROM employees 
+                                GROUP BY YearsAtCompany 
+                                ORDER BY YearsAtCompany DESC;""",conn)
+        #line chart
+        fig4 = px.line(per_byYear_sql,
+                    x="YearsAtCompany",
+                    y="AVG_PerformanceRating",
+                    title="loyalty vs performance",
+                    markers=True,
+                    color_discrete_sequence=["#FFD700"])
+        fig4 = style_fig(fig4)
+        st.plotly_chart(fig4, use_container_width=True)

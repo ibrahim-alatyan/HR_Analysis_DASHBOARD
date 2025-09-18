@@ -201,3 +201,28 @@ with tab3:
     st.markdown("-----------------------------------------------------------")
 
     col3 , col4 = st.columns(2) #split page
+    
+    with col3:
+        #Q2/ What is the employee count for each department?
+        dept_counts_sql = pd.read_sql_query("""SELECT Department , COUNT(*) AS EMPLOYEES
+                            FROM employees 
+                            GROUP BY Department;""",conn)
+        #bar chart
+        fig1 = px.bar(dept_counts_sql, x="Department", y="EMPLOYEES",
+                    title="EMPLOYEES IN EVERY DEPARMENT",
+                    text="EMPLOYEES",
+                    color="Department")
+        fig1 = style_fig(fig1)
+        st.plotly_chart(fig1, use_container_width=True)
+
+        #Q8/ What is the average monthly income by education level?
+        avg_income_edu_sql = pd.read_sql_query("""SELECT Education, AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                            FROM employees 
+                            GROUP BY Education;""",conn)  
+        fig2 = px.area(avg_income_edu_sql, 
+                            x="Education",
+                            y="AVG_MonthlyIncome",
+                            title="AvgMonthly Income by Education Level"
+        )
+        fig2 = style_fig(fig2)
+        st.plotly_chart(fig2, use_container_width=True)

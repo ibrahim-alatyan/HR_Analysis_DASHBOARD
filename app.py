@@ -71,6 +71,7 @@ with tab1:
         text="Employees",
         color="Department"
     )
+    dynFig1 = style_fig(dynFig1)
     st.plotly_chart(dynFig1, use_container_width=True)
 
     #dynamic fig - pie chart
@@ -78,6 +79,7 @@ with tab1:
                      names="JobRole",
                      values="MonthlyIncome",
                      title="MONTHLY INCOME BY JOBROLE")
+    dynFig2 = style_fig(dynFig2)
     st.plotly_chart(dynFig2, use_container_width=True)
     
     #dynamic fig - scatter
@@ -86,6 +88,7 @@ with tab1:
                          color = "TotalWorkingYears",
                          title="Income vs Total Working Years"
     )
+    dynFig3 = style_fig(dynFig3)
     st.plotly_chart(dynFig3, use_container_width=True)
 
     #dynamic fig - histogram with box
@@ -98,6 +101,7 @@ with tab1:
                       x = "Age",
                       y = "AvgMonthlyIncome"
     )
+    dynFig4 = style_fig(dynFig4)
     st.plotly_chart(dynFig4, use_container_width=True)
 
     #dynamic fig - stacked histogram 
@@ -105,6 +109,7 @@ with tab1:
                             x="JobRole", color="OverTime",
                             title="Overtime by Job Role"
     )
+    dynFig5 = style_fig(dynFig5)
     st.plotly_chart(dynFig5, use_container_width=True)
 
     #TABLE

@@ -114,3 +114,11 @@ with tab1:
 
     #TABLE
     st.dataframe(filterDF.set_index("EmployeeNumber"))
+#####################################################
+
+with tab2:
+    st.title("MANAGE EMPLOYEES")
+    st.markdown("----------------------------------------------------------------------")
+    st.header("ADD EMPLOYEES")
+    
+    col1 , col2 = st.columns(2) #to split page

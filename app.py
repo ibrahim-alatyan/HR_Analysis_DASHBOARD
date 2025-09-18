@@ -169,3 +169,10 @@ with tab2:
                 st.rerun()
             except Exception as e:
                 st.error(f"There error : {e}")
+        
+        #UPDATE INCOME
+    st.markdown("--------------------------------------------------------")
+    st.header("UPDATE INCOME")
+    emp_numb_update = st.number_input("Enter employees number", step=1,  format="%d")
+    emp_income_update = st.number_input("Enter new income", step = 50 , min_value= 500)
+    update_btn = st.button("UPDATE")

@@ -24,7 +24,7 @@ Data analysis was performed using **Python and SQL**, and the dashboard was buil
 ---
 
 ## ⚙️ Installation
-**IN TERMINAL**
+- **IN TERMINAL**
 
 1. Clone the repository:
    ```bash

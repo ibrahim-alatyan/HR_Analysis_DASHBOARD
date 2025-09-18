@@ -176,3 +176,21 @@ with tab2:
     emp_numb_update = st.number_input("Enter employees number", step=1,  format="%d")
     emp_income_update = st.number_input("Enter new income", step = 50 , min_value= 500)
     update_btn = st.button("UPDATE")
+
+    if update_btn:
+        try:
+            update_sql = """
+                UPDATE employees SET MonthlyIncome = ? WHERE EmployeeNumber = ?
+            """
+            update_vals = (int(emp_income_update), int(emp_numb_update))  # fixed
+            cursor = conn.cursor()
+            cursor.execute(update_sql, update_vals)
+
+            if cursor.rowcount == 0:  #if no rows affected
+                st.warning(f"Employee number {emp_numb_update} not found.")
+            else:
+                conn.commit()
+                st.success(f"Income update to {emp_income_update} for emplyees number: {emp_numb_update}")
+                st.rerun()
+        except Exception as e:
+            st.error(f"There error : {e}")

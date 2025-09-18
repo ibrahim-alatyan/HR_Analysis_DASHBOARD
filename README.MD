@@ -24,20 +24,18 @@ Data analysis was performed using **Python and SQL**, and the dashboard was buil
 ---
 
 ## ⚙️ Installation
+**IN TERMINAL**
 
 1. Clone the repository:
-  **IN TERMINAL**
    ```bash
    git clone https://github.com/username/HR-Analytics-Dashboard.git
    cd HR-Analytics-Dashboard
 
 2. Install the required libraries:
-  **IN TERMINAL**
     ```bash
     pip install -r requirements.txt
 
 3. Run the app:
-  **IN TERMINAL**
     ```bash
     streamlit run app.py
 

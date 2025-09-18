@@ -29,6 +29,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# make every chart have same color
+def style_fig(fig, bg="#5fc5dc", font_color="black"):
+    fig.update_layout(
+        paper_bgcolor=bg, #paper color
+        plot_bgcolor=bg, # chart background color
+        font=dict(color=font_color), #font color
+        xaxis=dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)), #font color for title and labels
+        yaxis=dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)), #font color for title and labels
+        legend_title=dict(font=dict(color=font_color)) #change legend color
+    )
+    return fig
+
+
 
 #SPLIT TAP'S
 tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])

@@ -9,3 +9,7 @@ st.title("📊HR Analytics Dashboard") # title
 #SETUP DATASET
 conn = sqlite3.connect("hr.db") # connect with database
 df = pd.read_sql_query("SELECT * FROM employees", conn) #copy database to df
+
+
+#SPLIT TAP'S
+tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])

@@ -47,13 +47,10 @@ def style_fig(fig, bg="#5fc5dc", font_color="black"):
     return fig
 
 
-
 #SPLIT TAP'S
 tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])
 
-
 #####################################################
-
 
 with tab1:
     st.title("DYNAMIC DASHBOARD")
@@ -194,3 +191,13 @@ with tab2:
                 st.rerun()
         except Exception as e:
             st.error(f"There error : {e}")
+
+
+            #####################################################
+
+
+with tab3:
+    st.header("MORE USEFUL CHART")
+    st.markdown("-----------------------------------------------------------")
+
+    col3 , col4 = st.columns(2) #split page

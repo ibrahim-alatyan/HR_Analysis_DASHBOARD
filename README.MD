@@ -4,6 +4,10 @@ An interactive HR analytics dashboard built with **Python** and **Streamlit** us
 The dashboard provides insights into employee data, allows HR managers to explore key metrics, and includes simple employee management features.  
 Data analysis was performed using **Python and SQL**, and the dashboard was built with **Streamlit**.
 
+##### Dataset
+The project uses the IBM HR Analytics Employee Attrition & Performance dataset.
+🔗 Dataset URL: [Kaggle - IBM HR Analytics](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+
 ---
 
 ## 🚀 Features

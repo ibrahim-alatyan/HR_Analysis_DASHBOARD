@@ -10,6 +10,25 @@ st.title("📊HR Analytics Dashboard") # title
 conn = sqlite3.connect("hr.db") # connect with database
 df = pd.read_sql_query("SELECT * FROM employees", conn) #copy database to df
 
+#STYLE to make taps better
+st.markdown(
+    """
+    <style>
+
+    .stTabs [role="tab"] {
+        flex: 1;  /* each tab takes equal width */
+        text-align: center; /* make text in center */
+        font-size: 18px; /* make font bigger */
+    }
+    .stApp {
+        background-color: #5fc5dc; /* change background color */
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 #SPLIT TAP'S
 tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])

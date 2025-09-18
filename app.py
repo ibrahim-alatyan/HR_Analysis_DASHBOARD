@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import plotly.express as px
-
-st.set_page_config(page_title="HR Analytics Dashboard", page_icon="📊")
+                    #to give title to  page             to give icon to page
+st.set_page_config(page_title="HR Analytics Dashboard", page_icon="📊") 
 st.title("📊HR Analytics Dashboard") # title
 
 #SETUP DATASET
@@ -52,13 +52,15 @@ tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])
 
 #####################################################
 
-with tab1:
+with tab1: #dynamic dashboard tab
     st.title("DYNAMIC DASHBOARD")
+
     #SelectBox for filter
     selectDep = st.selectbox("Select Department",
                              ("All","Human Resources","Research & Development","Sales"))
     st.write(f"**You Select {selectDep} Department**")
-    #filter
+
+    #department filter
     if selectDep != "All":
         filterDF = df[df["Department"] == selectDep]
     else:
@@ -72,8 +74,8 @@ with tab1:
         title="EMPLOYEES IN EVERY DEPARTMENT",
         text="Employees",
         color="Department"
-    )
-    dynFig1 = style_fig(dynFig1)
+    )        #style_fig is funcation to make every chart have same color
+    dynFig1 = style_fig(dynFig1) 
     st.plotly_chart(dynFig1, use_container_width=True)
 
     #dynamic fig - pie chart
@@ -93,12 +95,14 @@ with tab1:
     dynFig3 = style_fig(dynFig3)
     st.plotly_chart(dynFig3, use_container_width=True)
 
-    #dynamic fig - histogram with box
+    #make avg for monthly income group by age = want for dynfig4
     avgIncome_byAge = (
     filterDF.groupby("Age")["MonthlyIncome"]
             .mean()
             .reset_index(name= "AvgMonthlyIncome")
     )
+
+    #dynamic fig - histogram with box
     dynFig4 = px.line(avgIncome_byAge,
                       x = "Age",
                       y = "AvgMonthlyIncome"
@@ -114,38 +118,45 @@ with tab1:
     dynFig5 = style_fig(dynFig5)
     st.plotly_chart(dynFig5, use_container_width=True)
 
-    #TABLE
+    #TABLE for employees work with department filter
     st.dataframe(filterDF.set_index("EmployeeNumber"))
+
 #####################################################
 
-with tab2:
+with tab2: # employees managment tab page
     st.title("MANAGE EMPLOYEES")
     st.markdown("----------------------------------------------------------------------")
     st.header("ADD EMPLOYEES")
     
     col1 , col2 = st.columns(2) #to split page
 
-    
     with col1:
         #select department
         dep = st.selectbox("Department", 
                             sorted(df["Department"]
                             .unique())
             )
+        
         #role filter 
         rolesFilter = df.loc[df["Department"] == dep , 
                             "JobRole"].unique()
+        
         #select role
         roleSELECT = st.selectbox("JobRole",(rolesFilter))
+        
         #income
         income = st.number_input("Income",1000 , 1000000 ,step = 50)
+
     with col2:
         #select age 
         age = st.number_input("Age",15 , 100)
+
         #education filter
         eduFilter = df.groupby("EducationField")
+
         #education
         edu = st.selectbox("Eduction",eduFilter)
+
         #gender
         gender = st.pills("Gender", ("Male" , "Female"))
 
@@ -170,19 +181,25 @@ with tab2:
         #UPDATE INCOME
     st.markdown("--------------------------------------------------------")
     st.header("UPDATE INCOME")
-    emp_numb_update = st.number_input("Enter employees number", step=1,  format="%d")
-    emp_income_update = st.number_input("Enter new income", step = 50 , min_value= 500)
-    update_btn = st.button("UPDATE")
 
+    #to enter employees number
+    emp_numb_update = st.number_input("Enter employees number", step=1,  format="%d")
+
+    #to enter new income to update it
+    emp_income_update = st.number_input("Enter new income", step = 50 , min_value= 500)
+    
+    #update button
+    update_btn = st.button("UPDATE")
     if update_btn:
         try:
             update_sql = """
                 UPDATE employees SET MonthlyIncome = ? WHERE EmployeeNumber = ?
             """
-            update_vals = (int(emp_income_update), int(emp_numb_update))  # fixed
+            update_vals = (int(emp_income_update), int(emp_numb_update))
             cursor = conn.cursor()
             cursor.execute(update_sql, update_vals)
 
+            #to see if employees exist or not
             if cursor.rowcount == 0:  #if no rows affected
                 st.warning(f"Employee number {emp_numb_update} not found.")
             else:
@@ -192,11 +209,9 @@ with tab2:
         except Exception as e:
             st.error(f"There error : {e}")
 
-
             #####################################################
 
-
-with tab3:
+with tab3: # tabs for more chart it's helpful for hr
     st.header("MORE USEFUL CHART")
     st.markdown("-----------------------------------------------------------")
 

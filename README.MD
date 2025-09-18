@@ -28,8 +28,8 @@ Data analysis was performed using **Python and SQL**, and the dashboard was buil
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/HR-Analytics-Dashboard.git
-   cd HR-Analytics-Dashboard
+   git clone https://github.com/ibrahim-alatyan/HR_Analysis_DASHBOARD.git
+   cd HR_Analysis_DASHBOARD
 
 2. Install the required libraries:
     ```bash

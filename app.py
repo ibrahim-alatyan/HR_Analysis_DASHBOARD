@@ -122,3 +122,30 @@ with tab2:
     st.header("ADD EMPLOYEES")
     
     col1 , col2 = st.columns(2) #to split page
+
+    
+    with col1:
+        #select department
+        dep = st.selectbox("Department", 
+                            sorted(df["Department"]
+                            .unique())
+            )
+        #role filter 
+        rolesFilter = df.loc[df["Department"] == dep , 
+                            "JobRole"].unique()
+        #select role
+        roleSELECT = st.selectbox("JobRole",(rolesFilter))
+        #income
+        income = st.number_input("Income",1000 , 1000000 ,step = 50)
+    with col2:
+        #select age 
+        age = st.number_input("Age",15 , 100)
+        #education filter
+        eduFilter = df.groupby("EducationField")
+        #education
+        edu = st.selectbox("Eduction",eduFilter)
+        #gender
+        gender = st.pills("Gender", ("Male" , "Female"))
+
+        #Add button to database
+        add_btn = st.button("ADD")

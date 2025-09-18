@@ -29,6 +29,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+#automatic employees number increase
+def emp_numb(): 
+    new_numb = ( len(df) +1 )
+    return new_numb
+
 # make every chart have same color
 def style_fig(fig, bg="#5fc5dc", font_color="black"):
     fig.update_layout(
@@ -149,3 +154,18 @@ with tab2:
 
         #Add button to database
         add_btn = st.button("ADD")
+        if add_btn:
+            new_emp_numb = emp_numb()
+            try:
+                add_sql = """
+                    INSERT INTO employees
+                        (EmployeeNumber, Department, JobRole, MonthlyIncome, Age, EducationField, Gender)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """
+                add_vals = (new_emp_numb, dep, roleSELECT, int(income), int(age), edu, gender) #value
+                conn.execute(add_sql, add_vals)
+                conn.commit()
+                st.success("Employee added!")
+                st.rerun()
+            except Exception as e:
+                st.error(f"There error : {e}")

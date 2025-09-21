@@ -105,7 +105,7 @@ This project was built to answer important business questions from the HR datase
     ```bash
     pip install -r requirements.txt
 
-3. Run the app(`app.py`):
+3. Run the app:
     ```bash
     streamlit run app.py
 

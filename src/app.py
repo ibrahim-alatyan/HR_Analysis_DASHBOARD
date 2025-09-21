@@ -332,7 +332,7 @@ with tab3: # tabs for more chart it's helpful for hr
     SELECT *
     FROM OvertimeCounts
     ORDER BY Number_Overtime DESC;
-""", conn)
+    """, conn)
     fig9 = px.bar(mostOvertime, x="JobRole", y="Number_Overtime",
                   title="Q9: Job roles with most overtime",
                   text="Number_Overtime", color="JobRole")

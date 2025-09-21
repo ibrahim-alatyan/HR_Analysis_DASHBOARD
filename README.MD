@@ -18,8 +18,8 @@ An interactive HR analytics dashboard that transforms **IBM’s HR dataset** int
 
 ## 📷 Visual Demo
 
-![Dashboard Screenshot-1](assets\Screenshot1.png)
-![Dashboard Screenshot-2](assets\Screenshot2.png)
+![Dashboard Screenshot-1](assets/Screenshot1.png)
+![Dashboard Screenshot-2](assets/Screenshot2.png)
 
 ---
 

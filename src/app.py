@@ -107,7 +107,7 @@ with tab1: #dynamic dashboard tab
         filterDF.groupby("Department").size().reset_index(name = "Employees"),
         x="Department",
         y="Employees",
-        title="EMPLOYEES IN EVERY DEPARTMENT",
+        title="Employees in every department",
         text="Employees",
         color="Department"
     )        #style_fig is funcation to make every chart have same color
@@ -118,7 +118,7 @@ with tab1: #dynamic dashboard tab
     dynFig2 = px.pie(filterDF,
                      names="JobRole",
                      values="MonthlyIncome",
-                     title="MONTHLY INCOME BY JOBROLE")
+                     title="Monthly income by jobrole")
     dynFig2 = style_fig(dynFig2)
     st.plotly_chart(dynFig2, use_container_width=True)
     
@@ -126,7 +126,7 @@ with tab1: #dynamic dashboard tab
     dynFig3 = px.scatter(filterDF,
                          x = "TotalWorkingYears" , y = "MonthlyIncome",
                          color = "TotalWorkingYears",
-                         title="Income vs Total Working Years",
+                         title="Income vs total working years",
                          color_continuous_scale=["yellow", "red"]
     )
     dynFig3 = style_fig(dynFig3)
@@ -143,6 +143,7 @@ with tab1: #dynamic dashboard tab
     dynFig4 = px.line(avgIncome_byAge,
                       x = "Age",
                       y = "AvgMonthlyIncome",
+                      title="Avg income by age",
                       color_discrete_sequence=["#f7e8d2"]
     )
     dynFig4 = style_fig(dynFig4)
@@ -151,13 +152,14 @@ with tab1: #dynamic dashboard tab
     #dynamic fig - stacked histogram 
     dynFig5 = px.histogram(filterDF,
                             x="JobRole", color="OverTime",
-                            title="Overtime by Job Role",
+                            title="Overtime by jobrole",
                             color_discrete_sequence=["#edb96d","#e68c0b"]
     ) 
     dynFig5 = style_fig(dynFig5)
     st.plotly_chart(dynFig5, use_container_width=True)
 
     #TABLE for employees work with department filter
+    st.subheader("Employees Table")
     st.dataframe(filterDF.set_index("EmployeeNumber"))
 
 #############################################################

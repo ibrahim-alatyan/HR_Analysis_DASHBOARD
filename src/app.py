@@ -19,6 +19,7 @@ df = pd.read_sql_query("SELECT * FROM employees", conn) #copy database to df
 
 backGroundColor = "#4F008C"
 fontColor = "#FF375E"
+fig_font_color = "#ffffff"
 
 #STYLE to make taps better
 st.markdown(
@@ -58,7 +59,7 @@ def emp_numb():
     return new_numb
 
 # make every chart have same color
-def style_fig(fig, bg=backGroundColor, font_color=fontColor):
+def style_fig(fig, bg=backGroundColor, font_color=fig_font_color):
     fig.update_layout(
         paper_bgcolor=bg,
         plot_bgcolor=bg,
@@ -120,7 +121,7 @@ with tab1: #dynamic dashboard tab
                          x = "TotalWorkingYears" , y = "MonthlyIncome",
                          color = "TotalWorkingYears",
                          title="Income vs Total Working Years",
-                         trendline_color_override="white"
+                         color_continuous_scale=["yellow", "red"]
     )
     dynFig3 = style_fig(dynFig3)
     st.plotly_chart(dynFig3, use_container_width=True)
@@ -135,7 +136,8 @@ with tab1: #dynamic dashboard tab
     #dynamic fig - histogram with box
     dynFig4 = px.line(avgIncome_byAge,
                       x = "Age",
-                      y = "AvgMonthlyIncome"
+                      y = "AvgMonthlyIncome",
+                      color_discrete_sequence=["#f7e8d2"]
     )
     dynFig4 = style_fig(dynFig4)
     st.plotly_chart(dynFig4, use_container_width=True)
@@ -143,8 +145,9 @@ with tab1: #dynamic dashboard tab
     #dynamic fig - stacked histogram 
     dynFig5 = px.histogram(filterDF,
                             x="JobRole", color="OverTime",
-                            title="Overtime by Job Role"
-    )
+                            title="Overtime by Job Role",
+                            color_discrete_sequence=["#edb96d","#e68c0b"]
+    ) 
     dynFig5 = style_fig(dynFig5)
     st.plotly_chart(dynFig5, use_container_width=True)
 
@@ -249,57 +252,94 @@ with tab3: # tabs for more chart it's helpful for hr
     st.header("MORE USEFUL CHART")
     st.markdown("-----------------------------------------------------------")
 
-    col3 , col4 = st.columns(2) #split page
-    
-    with col3:
-        #Q2/ What is the employee count for each department?
-        dept_counts_sql = pd.read_sql_query("""SELECT Department , COUNT(*) AS EMPLOYEES
-                            FROM employees 
-                            GROUP BY Department;""",conn)
-        #bar chart
-        fig1 = px.bar(dept_counts_sql, x="Department", y="EMPLOYEES",
-                    title="EMPLOYEES IN EVERY DEPARMENT",
-                    text="EMPLOYEES",
-                    color="Department")
-        fig1 = style_fig(fig1)
-        st.plotly_chart(fig1, use_container_width=True)
+    #Q1/ How many total employees are there?
+    total_employees = pd.read_sql_query("""SELECT COUNT(*) AS ALL_EMPLOYEES FROM employees;""", conn)
+    st.metric(label="Q1: How many total employees are there?",
+            value=int(total_employees["ALL_EMPLOYEES"].iloc[0]))
 
-        #Q8/ What is the average monthly income by education level?
-        avg_income_edu_sql = pd.read_sql_query("""SELECT Education, AVG(MonthlyIncome) AS AVG_MonthlyIncome
-                            FROM employees 
-                            GROUP BY Education;""",conn)  
-        fig2 = px.area(avg_income_edu_sql, 
-                            x="Education",
-                            y="AVG_MonthlyIncome",
-                            title="AvgMonthly Income by Education Level"
-        )
-        fig2 = style_fig(fig2)
-        st.plotly_chart(fig2, use_container_width=True)
-    
-    with col4:
-        #Q3/ What is the average monthly income by job role?
-        avg_income_byJob_sql = pd.read_sql_query("""SELECT JobRole , AVG(MonthlyIncome) AS AVG_MonthlyIncome
-                            FROM employees 
-                            GROUP BY JobRole;""",conn)
-        #pie chart
-        fig3 = px.pie(avg_income_byJob_sql,
-                    values="AVG_MonthlyIncome",
-                    names="JobRole",
-                    title="average monthly income by job role")
-        fig3 = style_fig(fig3)
-        st.plotly_chart(fig3, use_container_width=True)
+    #Q2/ What is the employee count for each department?
+    dept_counts = pd.read_sql_query("""SELECT Department , COUNT(*) AS EMPLOYEES
+                                    FROM employees GROUP BY Department;""", conn)
+    fig2 = px.bar(dept_counts, x="Department", y="EMPLOYEES",
+                title="Q2: Employee count for each department",
+                text="EMPLOYEES", color="Department")
+    st.plotly_chart(style_fig(fig2), use_container_width=True)
 
-        #Q12/ Avarage Performance rating by years at company (loyalty vs performance) ?
-        per_byYear_sql = pd.read_sql_query("""SELECT YearsAtCompany, AVG(PerformanceRating) AS AVG_PerformanceRating 
-                                FROM employees 
-                                GROUP BY YearsAtCompany 
-                                ORDER BY YearsAtCompany DESC;""",conn)
-        #line chart
-        fig4 = px.line(per_byYear_sql,
-                    x="YearsAtCompany",
-                    y="AVG_PerformanceRating",
-                    title="loyalty vs performance",
-                    markers=True,
-                    color_discrete_sequence=["#FFD700"])
-        fig4 = style_fig(fig4)
-        st.plotly_chart(fig4, use_container_width=True)
+    #Q3/ What is the average monthly income by job role?
+    avg_income_byJob = pd.read_sql_query("""SELECT JobRole , AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                                            FROM employees GROUP BY JobRole;""", conn)
+    fig3 = px.pie(avg_income_byJob, values="AVG_MonthlyIncome", names="JobRole",
+                title="Q3: Average monthly income by job role")
+    st.plotly_chart(style_fig(fig3), use_container_width=True)
+
+    #Q4/ Who are the top 5 employees by performance rating?
+    top5_Performance = pd.read_sql_query("""SELECT EmployeeNumber, Department, JobRole, PerformanceRating, MonthlyIncome 
+                                        FROM employees ORDER BY PerformanceRating DESC LIMIT 5;""", conn)
+    st.subheader("Q4: Top 5 employees by performance rating")
+    st.dataframe(top5_Performance)
+
+    #Q5/ Which department has the highest average performance rating?
+    highAVG_dep = pd.read_sql_query("""SELECT Department ,AVG(PerformanceRating) as Avg_Performance 
+                                    FROM employees GROUP BY Department 
+                                    ORDER BY Avg_Performance DESC LIMIT 1;""", conn)
+    st.subheader("Q5: Department with highest average performance rating")
+    st.dataframe(highAVG_dep)
+
+    #Q6/ What Average age of employees for each Department?
+    avgAGE_Emp = pd.read_sql_query("""SELECT Department, AVG(Age) AS AVG_Age 
+                                    FROM employees GROUP BY Department;""", conn)
+    fig6 = px.bar(avgAGE_Emp, x="Department", y="AVG_Age",
+                title="Q6: Average age of employees by department",
+                text="AVG_Age", color="Department")
+    st.plotly_chart(style_fig(fig6), use_container_width=True)
+
+    #Q7/ What Average monthly income by gender ?
+    avg_income_gender = pd.read_sql_query("""SELECT Gender, AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                                             FROM employees GROUP BY Gender;""", conn)
+    fig7 = px.bar(avg_income_gender, x="Gender", y="AVG_MonthlyIncome",
+                  title="Q7: Average monthly income by gender",
+                  text="AVG_MonthlyIncome", color="Gender")
+    st.plotly_chart(style_fig(fig7), use_container_width=True)
+
+    #Q8/ What is the average monthly income by education level?
+    avg_income_edu = pd.read_sql_query("""SELECT Education, AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                                          FROM employees GROUP BY Education;""", conn)
+    fig8 = px.area(avg_income_edu, x="Education", y="AVG_MonthlyIncome",
+                   title="Q8: Average monthly income by education level")
+    st.plotly_chart(style_fig(fig8), use_container_width=True)
+
+    #Q9/ Which job role works the most overtime?
+    mostOvertime = pd.read_sql_query("""SELECT JobRole, COUNT(*) AS Number_Overtime
+                                        FROM employees WHERE OverTime = 'Yes'
+                                        GROUP BY JobRole ORDER BY Number_Overtime DESC;""", conn)
+    fig9 = px.bar(mostOvertime, x="JobRole", y="Number_Overtime",
+                  title="Q9: Job roles with most overtime",
+                  text="Number_Overtime", color="JobRole")
+    st.plotly_chart(style_fig(fig9), use_container_width=True)
+
+    #Q10/ What Average years at company by department ?
+    avg_year_byDep = pd.read_sql_query("""SELECT Department, AVG(YearsAtCompany) AS AVG_YearsAtCompany
+                                          FROM employees GROUP BY Department;""", conn)
+    fig10 = px.bar(avg_year_byDep, x="Department", y="AVG_YearsAtCompany",
+                   title="Q10: Average years at company by department",
+                   text="AVG_YearsAtCompany", color="Department")
+    st.plotly_chart(style_fig(fig10), use_container_width=True)
+
+    #Q11/ What Average monthly income by job level ?
+    avg_income_joblevel = pd.read_sql_query("""SELECT Joblevel, AVG(MonthlyIncome) AS AVG_MonthlyIncome
+                                               FROM employees GROUP BY Joblevel;""", conn)
+    fig11 = px.bar(avg_income_joblevel, x="JobLevel", y="AVG_MonthlyIncome",
+                title="Q11: Average monthly income by job level",
+                text="AVG_MonthlyIncome", color="JobLevel")
+    st.plotly_chart(style_fig(fig11), use_container_width=True)
+
+
+    #Q12/ Avarage Performance rating by years at company (loyalty vs performance) ?
+    per_byYear = pd.read_sql_query("""SELECT YearsAtCompany, AVG(PerformanceRating) AS AVG_PerformanceRating 
+                                      FROM employees GROUP BY YearsAtCompany 
+                                      ORDER BY YearsAtCompany DESC;""", conn)
+    fig12 = px.line(per_byYear, x="YearsAtCompany", y="AVG_PerformanceRating",
+                    title="Q12: Average performance rating by years at company (loyalty vs performance)",
+                    markers=True, color_discrete_sequence=["#FFD700"])
+    st.plotly_chart(style_fig(fig12), use_container_width=True)
+    

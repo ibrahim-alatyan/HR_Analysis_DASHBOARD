@@ -284,10 +284,16 @@ with tab3: # tabs for more chart it's helpful for hr
     st.subheader("Q4: Top 5 employees by performance rating")
     st.dataframe(top5_Performance)
 
-    #Q5/ Which department has the highest average performance rating?
-    highAVG_dep = pd.read_sql_query("""SELECT Department ,AVG(PerformanceRating) as Avg_Performance 
-                                    FROM employees GROUP BY Department 
-                                    ORDER BY Avg_Performance DESC LIMIT 1;""", conn)
+    #Q5/ Which department has the highest average performance rating?      CTE
+    highAVG_dep = pd.read_sql_query("""WITH AvgDeptPerformance AS (
+    SELECT Department, AVG(PerformanceRating) as Avg_Performance
+    FROM employees
+    GROUP BY Department
+    )
+    SELECT Department, Avg_Performance
+    FROM AvgDeptPerformance
+    ORDER BY Avg_Performance DESC
+    LIMIT 3;""", conn)
     st.subheader("Q5: Department with highest average performance rating")
     st.dataframe(highAVG_dep)
 
@@ -314,10 +320,17 @@ with tab3: # tabs for more chart it's helpful for hr
                    title="Q8: Average monthly income by education level")
     st.plotly_chart(style_fig(fig8), use_container_width=True)
 
-    #Q9/ Which job role works the most overtime?
-    mostOvertime = pd.read_sql_query("""SELECT JobRole, COUNT(*) AS Number_Overtime
-                                        FROM employees WHERE OverTime = 'Yes'
-                                        GROUP BY JobRole ORDER BY Number_Overtime DESC;""", conn)
+    #Q9/ Which job role works the most overtime?           CTE
+    mostOvertime = pd.read_sql_query("""WITH OvertimeCounts AS (
+    SELECT JobRole, COUNT(*) AS Number_Overtime
+    FROM employees
+    WHERE OverTime = 'Yes'
+    GROUP BY JobRole
+    )
+    SELECT *
+    FROM OvertimeCounts
+    ORDER BY Number_Overtime DESC;
+""", conn)
     fig9 = px.bar(mostOvertime, x="JobRole", y="Number_Overtime",
                   title="Q9: Job roles with most overtime",
                   text="Number_Overtime", color="JobRole")

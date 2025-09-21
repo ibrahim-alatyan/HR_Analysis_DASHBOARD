@@ -25,7 +25,6 @@ fig_font_color = "#ffffff"
 st.markdown(
     f"""
     <style>
-
     .stTabs [role="tab"] {{
         flex: 1; /* each tab takes equal width */
         text-align: center; /* make text in center */
@@ -39,7 +38,7 @@ st.markdown(
     }}
 
     /* Titles and Headers , label for selectbox and number input */
-    h1, h2, h3, h4, h5, h6, .stMarkdown, .stText, 
+    .stMarkdown, .stText, 
     .stSelectbox label, .stNumberInput label {{
         color: {fontColor};
     }}
@@ -47,11 +46,18 @@ st.markdown(
     [data-testid="stWidgetLabel"] * {{
         color: {fontColor};
     }}
-    
+
+    /* Metric + Subheader (h3) */
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricLabel"],
+    h3 {{
+        color: {fig_font_color} !important;
+    }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 #automatic employees number increase
 def emp_numb(): 
@@ -249,13 +255,13 @@ with tab2: # employees managment tab page
 #####################################################
 
 with tab3: # tabs for more chart it's helpful for hr
-    st.header("MORE USEFUL CHART")
+    st.title("MORE USEFUL CHART")
     st.markdown("-----------------------------------------------------------")
 
     #Q1/ How many total employees are there?
     total_employees = pd.read_sql_query("""SELECT COUNT(*) AS ALL_EMPLOYEES FROM employees;""", conn)
     st.metric(label="Q1: How many total employees are there?",
-            value=int(total_employees["ALL_EMPLOYEES"].iloc[0]))
+            value=int(total_employees["ALL_EMPLOYEES"]))
 
     #Q2/ What is the employee count for each department?
     dept_counts = pd.read_sql_query("""SELECT Department , COUNT(*) AS EMPLOYEES

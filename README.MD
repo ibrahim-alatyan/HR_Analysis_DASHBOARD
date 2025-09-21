@@ -107,11 +107,11 @@ This project was built to answer important business questions from the HR datase
 
 3. Run the app:
     ```bash
-    streamlit run app.py
+    streamlit run src/app.py
 
     OR
 
-    python -m streamlit run app.py
+    python -m streamlit run src/app.py
 
 ---
 

@@ -4,26 +4,49 @@ import sqlite3
 import plotly.express as px
                     #to give title to  page             to give icon to page
 st.set_page_config(page_title="HR Analytics Dashboard", page_icon="📊") 
-st.title("📊HR Analytics Dashboard") # title
+
+col_logo, col_header = st.columns([1, 3])  # 1 جزء يسار, 5 أجزاء يمين
+
+with col_logo:
+    st.image("assets\stc_logo_pink_frame.png", width=250)  # صغّر الحجم بالـ width
+
+with col_header:
+    st.title("HR Analytics Dashboard")
 
 #SETUP DATASET
 conn = sqlite3.connect("hr.db") # connect with database
 df = pd.read_sql_query("SELECT * FROM employees", conn) #copy database to df
 
+backGroundColor = "#4F008C"
+fontColor = "#FF375E"
+
 #STYLE to make taps better
 st.markdown(
-    """
+    f"""
     <style>
 
-    .stTabs [role="tab"] {
-        flex: 1;  /* each tab takes equal width */
+    .stTabs [role="tab"] {{
+        flex: 1; /* each tab takes equal width */
         text-align: center; /* make text in center */
         font-size: 18px; /* make font bigger */
-    }
-    .stApp {
-        background-color: #5fc5dc; /* change background color */
-    }
+        color: {fontColor}; /* font color */
+    }}
 
+    .stApp {{
+        background-color: {backGroundColor}; /* change background color */
+        color: {fontColor}; /* font color */
+    }}
+
+    /* Titles and Headers , label for selectbox and number input */
+    h1, h2, h3, h4, h5, h6, .stMarkdown, .stText, 
+    .stSelectbox label, .stNumberInput label {{
+        color: {fontColor};
+    }}
+
+    [data-testid="stWidgetLabel"] * {{
+        color: {fontColor};
+    }}
+    
     </style>
     """,
     unsafe_allow_html=True
@@ -35,21 +58,27 @@ def emp_numb():
     return new_numb
 
 # make every chart have same color
-def style_fig(fig, bg="#5fc5dc", font_color="black"):
+def style_fig(fig, bg=backGroundColor, font_color=fontColor):
     fig.update_layout(
-        paper_bgcolor=bg, #paper color
-        plot_bgcolor=bg, # chart background color
-        font=dict(color=font_color), #font color
-        xaxis=dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)), #font color for title and labels
-        yaxis=dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)), #font color for title and labels
-        legend_title=dict(font=dict(color=font_color)) #change legend color
+        paper_bgcolor=bg,
+        plot_bgcolor=bg,
+        font = dict(color=font_color),
+        title = dict(font=dict(color=font_color)),
+        xaxis = dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)),
+        yaxis = dict(title_font=dict(color=font_color), tickfont=dict(color=font_color)),
+        legend = dict(title_font=dict(color=font_color), font=dict(color=font_color)),
+        hoverlabel = dict(font_color=font_color, bgcolor=bg, bordercolor=font_color)
     )
+    for tr in fig.data:
+        tr.textfont = dict(color="white")
     return fig
 
 
 #SPLIT TAP'S
 tab1, tab2 ,tab3 = st.tabs(["DASHBOARD","EMPLOYEES MANAGMENT","CHART"])
 
+#####################################################
+# tab1 - for dynamic dashboard
 #####################################################
 
 with tab1: #dynamic dashboard tab
@@ -90,7 +119,8 @@ with tab1: #dynamic dashboard tab
     dynFig3 = px.scatter(filterDF,
                          x = "TotalWorkingYears" , y = "MonthlyIncome",
                          color = "TotalWorkingYears",
-                         title="Income vs Total Working Years"
+                         title="Income vs Total Working Years",
+                         trendline_color_override="white"
     )
     dynFig3 = style_fig(dynFig3)
     st.plotly_chart(dynFig3, use_container_width=True)
@@ -121,7 +151,9 @@ with tab1: #dynamic dashboard tab
     #TABLE for employees work with department filter
     st.dataframe(filterDF.set_index("EmployeeNumber"))
 
-#####################################################
+#############################################################
+# tab2 - for manage employees add emp or update he is income
+#############################################################
 
 with tab2: # employees managment tab page
     st.title("MANAGE EMPLOYEES")
@@ -209,7 +241,9 @@ with tab2: # employees managment tab page
         except Exception as e:
             st.error(f"There error : {e}")
 
-            #####################################################
+#####################################################
+# tab 3 - more chart and include the questions
+#####################################################
 
 with tab3: # tabs for more chart it's helpful for hr
     st.header("MORE USEFUL CHART")

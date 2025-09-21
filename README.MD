@@ -38,17 +38,26 @@ The project uses the IBM HR Analytics Employee Attrition & Performance dataset.
 🔗 Dataset URL: [Kaggle - IBM HR Analytics](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
 
 ### Key columns
-| Column | Description |
-|---|---|
-| `EmployeeNumber` | Unique employee ID |
-| `Department` | Department name |
-| `JobRole` | Employee role |
-| `MonthlyIncome` | Monthly salary (numeric) |
-| `Age` | Age in years |
-| `EducationField` | Education domain |
-| `PerformanceRating` | HR performance rating |
-| `YearsAtCompany` | Tenure in years |
-| `OverTime` | Y/N overtime flag |
+| Column | Description | Column | Description |
+|---|---|---|---|
+| `Age` | Age of the employee | `Attrition` | Whether the employee left the company (Yes/No) |
+| `BusinessTravel` | Frequency of business travel | `DailyRate` | Daily salary rate |
+| `Department` | Department name | `DistanceFromHome` | Distance from home to office (km) |
+| `Education` | Education level (1–5) | `EducationField` | Field of education |
+| `EmployeeCount` | Always 1 (constant) | `EmployeeNumber` | Unique employee ID |
+| `EnvironmentSatisfaction` | Work environment satisfaction (1–4) | `Gender` | Gender (Male/Female) |
+| `HourlyRate` | Hourly salary rate | `JobInvolvement` | Job involvement level (1–4) |
+| `JobLevel` | Level of the job role | `JobRole` | Employee role (e.g., Sales Executive) |
+| `JobSatisfaction` | Job satisfaction (1–4) | `MaritalStatus` | Marital status (Single/Married/Divorced) |
+| `MonthlyIncome` | Monthly salary (numeric) | `MonthlyRate` | Monthly salary rate |
+| `NumCompaniesWorked` | Number of companies worked at | `Over18` | Whether the employee is over 18 (Yes) |
+| `OverTime` | Overtime flag (Yes/No) | `PercentSalaryHike` | Percentage salary increase |
+| `PerformanceRating` | Performance rating (1–4) | `RelationshipSatisfaction` | Relationship satisfaction (1–4) |
+| `StandardHours` | Standard working hours (80) | `StockOptionLevel` | Stock option level (0–3) |
+| `TotalWorkingYears` | Total working years | `TrainingTimesLastYear` | Trainings attended last year |
+| `WorkLifeBalance` | Work-life balance rating (1–4) | `YearsAtCompany` | Years spent at the company |
+| `YearsInCurrentRole` | Years in current role | `YearsSinceLastPromotion` | Years since last promotion |
+| `YearsWithCurrManager` | Years with current manager |  |  |
 
 ---
 

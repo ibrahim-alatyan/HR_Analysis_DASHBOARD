@@ -5,7 +5,6 @@
 ![Pandas](https://img.shields.io/badge/Pandas-Library-150458?logo=pandas&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-Visualization-3F4F75?logo=plotly&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 An interactive HR analytics dashboard that transforms **IBM’s HR dataset** into actionable insights with **Python**, **SQL**, and **Streamlit**, empowering managers to explore data and manage employees with ease.
 
 ---

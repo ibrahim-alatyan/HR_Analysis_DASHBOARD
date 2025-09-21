@@ -4,20 +4,21 @@ An interactive HR analytics dashboard that transforms **IBM’s HR dataset** int
 ---
 
 ## Table of Contents
-- Visual Demo
-- Project Overview
-- Data Source & Dictionary
-- Data Analysis Purpose
-- Features
-- Technology Stack
-- Installation
-- Author
+- [Visual Demo](#visual-demo)  
+- [Project Overview](#project-overview)  
+- [Data Source & Dictionary](#data-source--dictionary)  
+- [Data Analysis Purpose](#data-analysis-purpose)  
+- [Features](#features)  
+- [Technology Stack](#technology-stack)  
+- [Installation](#️-installation)  
+- [Author](#author)  
+- [License](#license)
 
 ---
 
 ## 📷 Visual Demo
 
-[Dashboard Screenshot](Dynamic_Dashboard.png)
+![Dashboard Screenshot](Dynamic_Dashboard.png)
 
 ---
 

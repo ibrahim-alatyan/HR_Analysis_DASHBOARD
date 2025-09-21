@@ -1,9 +1,53 @@
 # 📊 HR Analytics Dashboard
+An interactive HR analytics dashboard that transforms **IBM’s HR dataset** into actionable insights with **Python**, **SQL**, and **Streamlit**, empowering managers to explore data and manage employees with ease.
+
+---
+
+## Table of Contents
+- Visual Demo
+- Project Overview
+- Data Source & Dictionary
+- Data Analysis Purpose
+- Features
+- Technology Stack
+- Installation
+- Author
+
+---
+
+## 📷 Visual Demo
+
+[Dashboard Screenshot](Dynamic_Dashboard.png)
+
+---
+
+## 📖 Project Overview
 
 An interactive HR analytics dashboard built with **Python** and **Streamlit** using IBM’s HR dataset.  
 The main goal of this project was to analyze HR data and answer key business questions using Python (Pandas) and SQL.
 The dashboard provides insights into employee data, allows HR managers to explore key metrics, and includes simple employee management features.  
 Data analysis was performed using **Python and SQL**, and the dashboard was built with **Streamlit**.
+
+---
+
+## 📊 Data Source & Dictionary
+
+### Dataset
+The project uses the IBM HR Analytics Employee Attrition & Performance dataset.
+🔗 Dataset URL: [Kaggle - IBM HR Analytics](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+
+### Key columns
+| Column | Description |
+|---|---|
+| `EmployeeNumber` | Unique employee ID |
+| `Department` | Department name |
+| `JobRole` | Employee role |
+| `MonthlyIncome` | Monthly salary (numeric) |
+| `Age` | Age in years |
+| `EducationField` | Education domain |
+| `PerformanceRating` | HR performance rating |
+| `YearsAtCompany` | Tenure in years |
+| `OverTime` | Y/N overtime flag |
 
 ---
 
@@ -24,6 +68,7 @@ This project was built to answer important business questions from the HR datase
 - Q11/ What Average monthly income by job level ?
 - Q12/ Performance rating by years at company (loyalty vs performance) ?
 
+---
 
 ## 🚀 Features
 - **Multi-tabs:** Organized navigation across pages.  
@@ -34,11 +79,16 @@ This project was built to answer important business questions from the HR datase
 
 ---
 
-## 📦 Libraries Used
-- `streamlit`  
-- `plotly.express`  
-- `sqlite3`  
-- `pandas`  
+## 🛠 Technology Stack
+
+### 🔧 Technologies
+- **Python 3.10** – Core programming language  
+- **SQLite3** – Lightweight relational database  
+- **Streamlit** – Web framework for building interactive dashboards  
+
+### 📦 Libraries
+- `Pandas` – Data manipulation and analysis  
+- `Plotly Express` – Interactive data visualization
 
 ---
 
@@ -64,12 +114,11 @@ This project was built to answer important business questions from the HR datase
 
 ---
 
-## 📊 Dataset
-
-The project uses the IBM HR Analytics Employee Attrition & Performance dataset.
-🔗 Dataset URL: [Kaggle - IBM HR Analytics](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+## 👨‍💻 Author
+- Ibrahim Al-Atyan
 
 ---
 
-Author
-- Ibrahim Al-Atyan
+## 📄 License
+This project is released under the **MIT License**.  
+See the [LICENSE](LICENSE) file for more details.
